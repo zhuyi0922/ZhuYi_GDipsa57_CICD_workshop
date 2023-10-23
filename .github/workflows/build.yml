@@ -2,14 +2,63 @@ name: CICD_WorkFlow
 
 on:
   push:
-    branch:
+    branches:
       - 'v[0-9]+.[0-9]+'
+
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  
     steps:
-      - name: Checkout
-        use: actions/checkout@v4
-  
+      - 
+        name: Checkout
+        uses: actions/checkout@v4
+
+      - 
+        name: Run Trivy vulnerability scanner in repo mode
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          ignore-unfixed: true
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          severity: 'CRITICAL'
+
+      -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      -
+        name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      -
+        name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          tags: marty0922/cicd:latest
+
+      - 
+        name: cosign-installer
+        uses: sigstore/cosign-installer@v3.1.2
+
+      - name: Sign the published Docker image
+        env:
+          COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
+          COSIGN_KEY: ${{ secrets.COSIGN_KEY }}
+        run: cosign sign --key - docker.io/marty0922/cicd:${{ github.run_id }}
+            
+
+        
+
+
+
+
+
+
 
