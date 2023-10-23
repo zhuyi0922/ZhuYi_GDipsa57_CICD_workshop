@@ -57,7 +57,7 @@ jobs:
       - 
         name: Sign the published Docker image
         run:
-          cosign sign --key cosign.key docker.io/marty0922/cicd@sha256:a9b5e107f097
+          cosign sign --key cosign.key docker.io/marty0922/cicd@sha256:80b6350dae5eb2803754ce425beb271b90d3ecf7364b3dd2eabad2fc123f0113
             
 
         
