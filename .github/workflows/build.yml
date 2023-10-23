@@ -48,14 +48,15 @@ jobs:
         uses: sigstore/cosign-installer@v3.1.2
 
       - 
-        name: Debug COSIGN_KEY
-        run: echo "${{ secrets.COSIGN_PRIVATE_KEY }}"
+        name: Write signing key to disk
+        run: 'echo "$KEY" > cosign.key'
+        shell: bash
+        env:
+          KEY: ${{ secrets.COSIGN_PRIVATE_KEY }}
 
       - name: Sign the published Docker image
-        env:
-          COSIGN_PRIVATE_KEY: ${{ secrets.COSIGN_PRIVATE_KEY }}
-        run: |
-          echo "${{ secrets.COSIGN_PRIVATE_KEY }}" | cosign sign --key - docker.io/marty0922/cicd:${{ github.run_id }}
+        run:
+          cosign sign --key cosign.key docker.io/marty0922/cicd:${{ github.run_id }}
             
 
         
