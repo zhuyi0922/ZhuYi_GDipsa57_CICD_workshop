@@ -54,7 +54,8 @@ jobs:
         env:
           KEY: ${{ secrets.COSIGN_PRIVATE_KEY }}
 
-      - name: Sign the published Docker image
+      - 
+        name: Sign the published Docker image
         run:
           cosign sign --key cosign.key docker.io/marty0922/cicd:${{ github.run_id }}
             
