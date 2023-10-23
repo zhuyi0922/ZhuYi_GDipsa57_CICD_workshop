@@ -47,6 +47,10 @@ jobs:
         name: cosign-installer
         uses: sigstore/cosign-installer@v3.1.2
 
+      - 
+        name: Debug COSIGN_KEY
+        run: echo "${{ secrets.COSIGN_PRIVATE_KEY }}"
+
       - name: Sign the published Docker image
         env:
           COSIGN_PRIVATE_KEY: ${{ secrets.COSIGN_PRIVATE_KEY }}
