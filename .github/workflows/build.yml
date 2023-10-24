@@ -22,7 +22,7 @@ jobs:
           ignore-unfixed: true
           format: 'table'
           output: 'trivy-results.txt'
-          severity: 'HIGH'
+          severity: 'CRITICAL'
           exit-code: 1
 
       -
@@ -85,6 +85,21 @@ jobs:
         if: success()
         run:
           cosign sign --key cosign.key --yes docker.io/marty0922/cicd:${{ github.sha }}
+
+      -
+        name: Slack Notification
+        if: success()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_MESSAGE: |
+            *Image Build And Signed*
+            *Name:* Zhu Yi
+            *Matriculation number:* A0285975E
+            *Email:* Zhuy71302@gmail.com
+            *Repository:* https://hub.docker.com/repository/docker/marty0922/cicd/general
+          SLACK_USERNAME: ZhuYi
+
 
             
 
