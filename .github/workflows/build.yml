@@ -95,9 +95,10 @@ jobs:
           SLACK_MESSAGE: |
             *Image Build And Signed*
             *Name:* Zhu Yi
-            *Matriculation number:* A0285975E
+            *Matriculation:* A0285975E
             *Email:* Zhuy71302@gmail.com
-            *Repository:* https://hub.docker.com/repository/docker/marty0922/cicd/general
+            *Git:* ${{ github.repository }}
+            *Image:* https://hub.docker.com/repository/docker/marty0922/cicd/general
           SLACK_USERNAME: ZhuYi
 
 
