@@ -36,6 +36,7 @@ jobs:
 
       - 
         name: Upload file to Slack
+        if: failure()
         uses: MeilCli/slack-upload-file@v3
         with:
           slack_token: ${{ secrets.SLACK_TOKEN }}
@@ -49,15 +50,18 @@ jobs:
         uses: docker/setup-qemu-action@v3
       -
         name: Set up Docker Buildx
+        if: success()
         uses: docker/setup-buildx-action@v3
       -
         name: Login to Docker Hub
+        if: success()
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
         name: Build and push
+        if: success()
         uses: docker/build-push-action@v5
         with:
           push: true
@@ -65,10 +69,12 @@ jobs:
 
       - 
         name: cosign-installer
+        if: success()
         uses: sigstore/cosign-installer@v3.1.2
 
       - 
         name: Write signing key to disk
+        if: success()
         run: 'echo "$KEY" > cosign.key'
         shell: bash
         env:
@@ -76,8 +82,10 @@ jobs:
 
       - 
         name: Sign the published Docker image
+        if: success()
         run:
           cosign sign --key cosign.key --yes docker.io/marty0922/cicd:${{ github.sha }}
+          
             
 
         
