@@ -12,6 +12,7 @@ jobs:
     steps:
       - 
         name: Checkout
+        if: ${{ contains(github.event.commits[0].message, '#NORUN') }}
         uses: actions/checkout@v4
 
       - 
@@ -22,7 +23,7 @@ jobs:
           ignore-unfixed: true
           format: 'table'
           output: 'trivy-results.txt'
-          severity: 'CRITICAL'
+          severity: 'CRITICAL,HIGH'
           exit-code: 1
 
       -
