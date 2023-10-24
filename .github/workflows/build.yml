@@ -39,7 +39,7 @@ jobs:
         if: failure()
         uses: MeilCli/slack-upload-file@v3
         with:
-          slack_token: ${{ secrets.SLACK_TOKEN }}
+          slack_token: ${{ secrets.SLACK_BOT_TOKEN }}
           channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
           file_path: 'trivy-results.txt'
           initial_comment: 'post by slack-upload-file'
@@ -85,7 +85,7 @@ jobs:
         if: success()
         run:
           cosign sign --key cosign.key --yes docker.io/marty0922/cicd:${{ github.sha }}
-          
+
             
 
         
