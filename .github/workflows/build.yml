@@ -23,7 +23,7 @@ jobs:
           ignore-unfixed: true
           format: 'table'
           output: 'trivy-results.txt'
-          severity: 'CRITICAL'
+          severity: 'HIGH'
           exit-code: 1
 
       -
@@ -32,7 +32,8 @@ jobs:
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
-          SLACK_MESSAGE: 'Scaning Failure'
+          SLACK_MESSAGE: 'Scaning Failure -- Zhu Yi'
+          SLACK_COLOR: ${{ job.status }}
           SLACK_USERNAME: ZhuYi
 
       - 
