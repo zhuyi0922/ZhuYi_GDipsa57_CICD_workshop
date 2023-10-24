@@ -27,6 +27,7 @@ jobs:
 
       -
         name: Send GitHub Action trigger data to Slack workflow
+        if: failure()
         id: slack
         uses: slackapi/slack-github-action@v1.24.0
         env:
@@ -43,6 +44,7 @@ jobs:
 
       -
         name: Set up QEMU
+        if: success()
         uses: docker/setup-qemu-action@v3
       -
         name: Set up Docker Buildx
@@ -58,7 +60,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: marty0922/cicd:latest
+          tags: marty0922/cicd:${{ github.sha }}
 
       - 
         name: cosign-installer
@@ -74,7 +76,7 @@ jobs:
       - 
         name: Sign the published Docker image
         run:
-          cosign sign --key cosign.key --yes docker.io/marty0922/cicd@sha256:80b6350dae5eb2803754ce425beb271b90d3ecf7364b3dd2eabad2fc123f0113 
+          cosign sign --key cosign.key --yes docker.io/marty0922/cicd:${{ github.sha }}
             
 
         
