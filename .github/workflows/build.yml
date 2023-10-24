@@ -12,7 +12,7 @@ jobs:
     steps:
       - 
         name: Checkout
-        if: ${{ contains(github.event.commits[0].message, '#NORUN') }}
+        if: ${{contains(github.event.commits[0].message, '#NORUN') == false}}
         uses: actions/checkout@v4
 
       - 
