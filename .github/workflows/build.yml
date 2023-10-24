@@ -22,7 +22,7 @@ jobs:
           ignore-unfixed: true
           format: 'sarif'
           output: 'trivy-results.sarif'
-          severity: 'CRITICAL'
+          severity: 'HIGH'
 
       -
         name: Set up QEMU
@@ -52,7 +52,7 @@ jobs:
           COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
           COSIGN_KEY: ${{ secrets.COSIGN_KEY }}
         run: cosign sign --key - docker.io/marty0922/cicd:${{ github.run_id }}
-        
+
             
 
         
