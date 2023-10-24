@@ -97,8 +97,8 @@ jobs:
             *Name:* Zhu Yi
             *Matriculation:* A0285975E
             *Email:* Zhuy71302@gmail.com
-            *Git:* ${{ github.repository }}
-            *Image:* https://hub.docker.com/repository/docker/marty0922/cicd/general
+            *Git:* <https://github.com/${{ github.repository }}>
+            *Image:* <https://hub.docker.com/repository/docker/marty0922/cicd/general>
           SLACK_USERNAME: ZhuYi
 
 
