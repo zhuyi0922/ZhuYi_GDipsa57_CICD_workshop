@@ -26,12 +26,12 @@ jobs:
           exit-code: 1
 
       -
-        name: Send GitHub Action trigger data to Slack workflow
-        if: failure()
-        id: slack
-        uses: slackapi/slack-github-action@v1.24.0
+        name: Slack Notification
+        uses: rtCamp/action-slack-notify@v2
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_MESSAGE: 'Scaning Failure'
+          SLACK_USERNAME: ZhuYi
 
       - 
         name: Upload file to Slack
